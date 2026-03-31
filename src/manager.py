@@ -23,3 +23,29 @@ class Manager:
             if tenant.apartment not in self.apartments:
                 return False
         return True
+    
+    def get_apartment_costs(self, apartment_key, year, month):
+        total = 0
+        for bill in self.bills:
+            if apartment_key != bill.apartment:
+                continue
+            if month != bill.settlement_month:
+                continue
+            total += bill.amount_pln
+        return total
+    
+    # class Bill(BaseModel):
+    # amount_pln: float
+    # date_due: str
+    # apartment: str
+    # settlement_year: int
+    # settlement_month: int
+    # type: str
+
+    # @staticmethod
+    # def from_json_file(file_path: str) -> List['Bill']:
+    #     data = None
+    #     with open(file_path, 'r') as file:
+    #         data = json.load(file)
+    #     assert isinstance(data, list), "Expected a list of bills"
+    #     return [Bill(**bill) for bill in data]
