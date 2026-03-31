@@ -55,12 +55,36 @@ def test_apartment_costs_with_optional_parameters():
 def test_counting_of_settlements ():
     parameters = Parameters()
     manager = Manager(parameters)
+    assert manager.get_apartment_costs('apart-polanka', 2025, 1) == 910.00
+    assert manager.get_apartment_costs('apart-polanka', 2025, 2) == 0
+    assert manager.get_apartment_costs('apart-polanka-2', 2025, 1) == None
+    
+def test_counting_of_settlements_for_tenants ():
+    parameters = Parameters()
+    manager = Manager(parameters)
+    assert manager.get_settlement_cost_for_tenent('apart-polanka', "Jan Nowak", 2025, 1) == 1803.3333333333333
+    assert manager.get_settlement_cost_for_tenent('apart-polanka', "Adam Kowalski", 2025, 1) == 1703.3333333333333
+    assert manager.get_settlement_cost_for_tenent('apart-polanka', "Ewa Adamska", 2025, 1) == 1603.3333333333333
+    assert manager.get_settlement_cost_for_tenent('apart-polanka', "Pablo Nowak", 2025, 4) == 0
+    assert manager.get_settlement_cost_for_tenent('apart-polanka', "Marek Kowalski", 2025, 5) == 0
+    assert manager.get_settlement_cost_for_tenent('apart-polanka-2', "Jan Nowak", 2025, 1) == None
+    assert manager.get_settlement_cost_for_tenent('apart-polanka-2', "Adam Kowalski", 2025, 2) == None
+    assert manager.get_settlement_cost_for_tenent('apart-polanka-2', "Ewa Adamska", 2025, 3) == None
+    assert manager.get_settlement_cost_for_tenent('apart-polanka-2', "Jan Nowak", 2025, 4) == None
+    assert manager.get_settlement_cost_for_tenent('apart-polanka-2', "Adam Kowalski", 2025, 5) == None
 
 
 def test_sum_of_apartment_costs ():
     parameters = Parameters()
     manager = Manager(parameters)
-    assert manager.get_apartment_costs('apart-polanka', 2025, 1) == 910.00
-    assert manager.get_apartment_costs('apart-polanka', 2025, 2) == 0
-    assert manager.get_apartment_costs('apart-polanka-2', 2025, 1) == None
+    assert manager.get_settlement_costs('apart-polanka', 2025, 1) == 4200.0
+    assert manager.get_settlement_costs('apart-polanka', 2025, 2) == 0
+    assert manager.get_settlement_costs('apart-polanka', 2025, 3) == 0
+    assert manager.get_settlement_costs('apart-polanka', 2025, 4) == 0
+    assert manager.get_settlement_costs('apart-polanka', 2025, 5) == 0
+    assert manager.get_settlement_costs('apart-polanka-2', 2025, 1) == None
+    assert manager.get_settlement_costs('apart-polanka-2', 2025, 2) == None
+    assert manager.get_settlement_costs('apart-polanka-2', 2025, 3) == None
+    assert manager.get_settlement_costs('apart-polanka-2', 2025, 4) == None
+    assert manager.get_settlement_costs('apart-polanka-2', 2025, 5) == None
 
